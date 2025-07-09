@@ -6,9 +6,10 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "v0 App",
-  description: "Created with v0",
-  generator: "v0.dev",
+  title: "Ohaeri Ekene Janua-Ceali | Front-End Developer",
+  description:
+    "Personal portfolio showcasing projects, skills, and experience in modern front-end development.",
+  generator: "Next.js, Vercel",
 };
 
 export default function RootLayout({
