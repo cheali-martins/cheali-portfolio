@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
+import { Github, Linkedin, Mail, Twitter } from "lucide-react";
 
 interface HeroProps {
   scrollToSection: (id: string) => void;
@@ -46,14 +47,15 @@ export default function Hero({ scrollToSection, isVisible }: HeroProps) {
           Front-End Developer
         </h2>
         <p className="text-white/60 mb-8 px-2">
-          This is a responsive and modern developer portfolio built using
-          Vercel’s v0.dev — an AI-powered UI builder. I crafted the design
-          prompt to generate a futuristic, glassmorphic interface and then
-          customized it using React, Tailwind CSS, and shadcn UI components.
+          This is a responsive and modern developer portfolio. I designed this
+          to give a, glassmorphic interface using React, Tailwind CSS, and
+          shadcn UI components.
         </p>
 
+        {/* Want to work on using icons instead of svg */}
         {/* Social Buttons */}
         <div className="flex justify-center gap-4 mb-8">
+          {/* github */}
           <a
             href="https://github.com/cheali-martins"
             target="_blank"
@@ -62,7 +64,7 @@ export default function Hero({ scrollToSection, isVisible }: HeroProps) {
             <Button
               variant="outline"
               size="icon"
-              className="bg-white/10 border-white/20 hover:bg-white/20"
+              className="bg-white/10 border-white/20 hover:bg-white/20 hover:animate-bounce transition duration-300"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -75,6 +77,7 @@ export default function Hero({ scrollToSection, isVisible }: HeroProps) {
             </Button>
           </a>
 
+          {/* LinkedIn */}
           <a
             href="https://linkedin.com/in/your-username"
             target="_blank"
@@ -83,7 +86,7 @@ export default function Hero({ scrollToSection, isVisible }: HeroProps) {
             <Button
               variant="outline"
               size="icon"
-              className="bg-white/10 border-white/20 hover:bg-white/20"
+              className="bg-white/10 border-white/20 hover:bg-white/20 hover:animate-bounce transition duration-300"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -96,11 +99,34 @@ export default function Hero({ scrollToSection, isVisible }: HeroProps) {
             </Button>
           </a>
 
+          {/* (x) Twitter */}
+          <a
+            href="https://twitter.com/cheali-martins"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button
+              variant="outline"
+              size="icon"
+              className="bg-white/10 border-white/20 hover:bg-white/20 hover:animate-bounce transition duration-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1200 1227"
+                fill="currentColor"
+                className="h-5 w-5"
+              >
+                <path d="M714.749 561.618L1169.73 0H1062.33L668.419 500.739L347.212 0H0L477.329 717.108L0 1227H107.419L524.829 695.935L874.943 1227H1200L714.749 561.618Z" />
+              </svg>
+            </Button>
+          </a>
+
+          {/* Email */}
           <a href="mailto:chealimartins@gmail.com">
             <Button
               variant="outline"
               size="icon"
-              className="bg-white/10 border-white/20 hover:bg-white/20"
+              className="bg-white/10 border-white/20 hover:bg-white/20 hover:animate-bounce transition duration-300"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

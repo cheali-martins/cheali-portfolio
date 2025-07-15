@@ -15,6 +15,9 @@ const config: Config = {
       animation: {
         "gradient-x": "gradient-x 15s ease infinite",
       },
+      boxShadow: {
+        glow: "0 0 20px rgba(59, 130, 246, 0.4)",
+      },
       keyframes: {
         "gradient-x": {
           "0%, 100%": { backgroundPosition: "0% 50%" },

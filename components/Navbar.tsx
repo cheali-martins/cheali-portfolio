@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
 import { Sun, Moon, Menu, X } from "lucide-react";
@@ -15,8 +15,31 @@ export default function Navbar({
 }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isMenuOpen &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node)
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
   return (
-    <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-black/20 backdrop-blur-md border border-white/10 rounded-full px-6 py-3">
+    <nav
+      className="
+    fixed top-4 z-50
+    bg-black/20 backdrop-blur-md border border-white/10 rounded-full px-6 py-3 shadow-xl
+    w-fit max-w-full left-4 md:left-1/2 md:transform md:-translate-x-1/2 flex items-center justify-between"
+    >
       <div className="hidden md:flex items-center space-x-8">
         {["home", "about", "skills", "projects", "contact"].map((section) => (
           <button
@@ -44,8 +67,8 @@ export default function Navbar({
       </div>
 
       {/* Mobile menu button */}
-      <div className="md:hidden flex items-center justify-between w-full">
-        <span className="text-sm font-medium">Menu</span>
+      <div className="md:hidden flex items-center justify-start w-full">
+        <span className="text-sm font-medium pr-1">Menu</span>
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="text-white/70 hover:text-white transition-colors"
@@ -54,28 +77,43 @@ export default function Navbar({
         </button>
       </div>
 
-      {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-4 md:hidden">
-          {["home", "about", "skills", "projects", "contact"].map((section) => (
-            <button
-              key={section}
-              onClick={() => scrollToSection(section)}
-              className="block w-full text-left py-2 capitalize text-white/70 hover:text-blue-400 transition-colors"
-            >
-              {section}
-            </button>
-          ))}
+      {/* Mobile menu (always rendered, animates in/out) */}
+      <div
+        ref={menuRef}
+        className={`absolute top-full left-0 right-0 mt-2 p-4 md:hidden rounded-3xl border border-white/10 backdrop-blur-md bg-black/40 transition-all ease-in-out duration-700 transform ${
+          isMenuOpen
+            ? "opacity-100 scale-100 pointer-events-auto"
+            : "opacity-0 -translate-y-4 scale-95 pointer-events-none"
+        }`}
+      >
+        {["home", "about", "skills", "projects", "contact"].map((section) => (
           <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="flex items-center w-full text-left py-2 text-white/70 hover:text-blue-400 transition-colors"
+            key={section}
+            onClick={() => {
+              scrollToSection(section);
+              setIsMenuOpen(false);
+            }}
+            className={`block w-full text-left py-1.5 capitalize transition-colors ${
+              activeSection === section
+                ? "text-blue-400 font-semibold"
+                : "text-white/70 hover:text-blue-400"
+            }`}
           >
-            <Sun className="h-4 w-4 mr-2 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-4 w-4 ml-0 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="ml-6">Toggle theme</span>
+            {section}
           </button>
-        </div>
-      )}
+        ))}
+        <button
+          onClick={() => {
+            setTheme(theme === "dark" ? "light" : "dark");
+            setIsMenuOpen(false);
+          }}
+          className="flex items-center w-full text-left py-2 text-white/70 hover:text-blue-400 transition-colors"
+        >
+          <Sun className="h-4 w-4 mr-2 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Moon className="absolute h-4 w-4 ml-0 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          {/* <span className="ml-6">Toggle theme</span> */}
+        </button>
+      </div>
     </nav>
   );
 }
