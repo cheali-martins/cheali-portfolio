@@ -29,6 +29,7 @@ export default function Navbar({
             {section}
           </button>
         ))}
+
         {/* Dark mode toggle */}
         <Button
           variant="ghost"
